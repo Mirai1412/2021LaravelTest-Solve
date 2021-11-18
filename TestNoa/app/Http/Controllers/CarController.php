@@ -7,11 +7,6 @@ use Illuminate\Http\Request;
 
 class CarController extends Controller
 {
-
-    public function __construct()
-    {
-
-    }
     /**
      * Display a listing of the resource.
      *
@@ -19,13 +14,7 @@ class CarController extends Controller
      */
     public function index()
     {
-        /*
-            1. DB에서 리스트를 가져온다.
-            2. 그 리스트를 블레이드 컴포넌트에게 전달한다.
-        */
-        //$cars = Car::all();
-        //$cars = Car::orderBy('created_at','desc')->get();
-
+        //
     }
 
     /**
