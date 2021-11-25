@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Car;
 use App\Models\Companies;
+use App\Models\Company;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class CarFactory extends Factory
@@ -16,12 +17,12 @@ class CarFactory extends Factory
     public function definition()
     {
         $c = null;
-        if (Companies::all()->count() == 0) {
-            $c = new Companies();
+        if (Company::all()->count() == 0) {
+            $c = new Company();
             $c->name = 'Hyundai';
             $c->save();
         }else{
-            $c = Companies::first();
+            $c = Company::first();
         }
 
         return [
