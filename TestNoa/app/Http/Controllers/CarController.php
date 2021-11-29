@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Car;
 use App\Models\Company;
+use App\View\Components\CarShow;
 use Illuminate\Http\Request;
 
 class CarController extends Controller
@@ -65,15 +66,20 @@ class CarController extends Controller
         ]);//이미지 필수 AND 이미지인지 확인
 
         //2. 이미지를 파일 시스템의 특정 위치에 저장한다.
+        $path = $request->image->store('images', 'public');
 
         /**
          * 3. 요청정보에서 ($request) 필요한 데이터를
          * 꺼내가지고 DB에 저장한다.
          */
+
+        $data = array_merge($data, ['image' => $path]);
         Car::create($data);
 
         //4. cars.index로 redirection
         return redirect()->route('cars.index');
+
+        // dd($data);
     }
 
     /**
@@ -84,7 +90,8 @@ class CarController extends Controller
      */
     public function show(Car $car)
     {
-        //
+
+        return view('components.cars.car-show', compact('car'));
     }
 
     /**

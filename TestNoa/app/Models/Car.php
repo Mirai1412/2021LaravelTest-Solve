@@ -14,4 +14,8 @@ class Car extends Model
     public function company(){
         return $this->belongsTo(Company::class);
     }
+
+    public function getImageAttribute($value){
+        return '/storage/' .$value;
+    }
 }
