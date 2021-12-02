@@ -10,6 +10,19 @@
             {{$car->type}}
             {{$car->style}}
         </div>
+        <button>
+            <a href="{{ route('cars.index') }}">
+                목록보기
+            </a>
+        </button>
+        <button>
+            <a href="{{ route('cars.edit',['car' => $car->id]) }}">
+               수정하기
+            </a>
+        </button>
+        <button>
+            <a href="{{ route('cars.destroy',['car' => $car->id]) }}">
+            삭제
+        </button>
     </div>
 </x-guest-layout>
-

@@ -6,6 +6,7 @@ use App\Models\Car;
 use App\Models\Company;
 use App\View\Components\CarShow;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class CarController extends Controller
 {
@@ -102,7 +103,8 @@ class CarController extends Controller
      */
     public function edit(Car $car)
     {
-        //
+        $companies = Company::all();
+        return view('components.cars.car-edit', compact(['car','companies']));
     }
 
     /**
@@ -114,7 +116,35 @@ class CarController extends Controller
      */
     public function update(Request $request, Car $car)
     {
-        //
+        $now = now();
+        $now -> year;
+        $data = $request->validate([
+            'image'=>'image',
+            'name' => 'required',
+            'company_id' => 'required',
+            'year' => 'required|numeric|min:1800|max:'.($now->year+1), //숫자이고 4자리
+            'price'=> 'required|numeric|min:1',
+            'type' => 'required',
+            'style'=> 'required'
+        ]);
+
+        $path='null';
+
+        if($request->image){ // 기본 이미지를 변경 하고자 하는 경우
+            Storage::delete($car->image);
+
+            $path = $request->image->store('images', 'public');
+        }
+
+
+        if($path != null){
+            $data = array_merge($data, ['image' => $path]);
+        }
+        $car->update($data);
+
+        return redirect()->route('cars.show',
+               ['dar'=>$car->id]);
+
     }
 
     /**
